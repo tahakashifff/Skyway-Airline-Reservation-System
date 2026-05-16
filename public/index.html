@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyWay Airlines | Elevate Your Journey</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <style>
+    /* Hero Section specific styles */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 800px;
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-top: 80px;
+    }
+
+    .hero-title {
+      font-size: 4.5rem;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 3rem;
+      z-index: 20;
+      text-align: center;
+    }
+
+    .hero-title span {
+      color: var(--primary);
+    }
+
+    .search-widget {
+      z-index: 20;
+      width: 90%;
+      max-width: 1000px;
+    }
+
+    .swiper-container {
+      width: 100%;
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
+
+    .dest-card {
+      background: var(--bg-soft);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+
+    .dest-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .dest-card:hover .dest-img {
+      opacity: 1;
+    }
+
+    .dest-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, rgba(15, 23, 42, 1) 0%, transparent 100%);
+      padding: 2rem 1.5rem 1.5rem;
+      color: #fff;
+    }
+
+    .step-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <i class="fas fa-plane-departure"></i> SkyWay
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="bookings.html">My Bookings</a>
+        <a href="checkin.html">Check-In</a>
+        <a href="status.html">Flight Status</a>
+      </div>
+      <div class="nav-actions">
+        <button id="hamburger" class="hamburger">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1 class="hero-title animate-fade-in">Elevate Your <span>Journey</span></h1>
+
+    <!-- Flight Search Widget -->
+    <div class="glass search-widget animate-fade-in" style="animation-delay: 0.2s; padding: 2rem;">
+      <form id="flight-search-form">
+        <div class="flex gap-6 mb-6" style="flex-wrap: wrap;">
+          <label style="color:var(--text); cursor:pointer;"><input type="radio" name="tripType" value="oneway" checked>
+            One Way</label>
+          <label style="color:var(--text); cursor:pointer;"><input type="radio" name="tripType" value="round"> Round
+            Trip</label>
+        </div>
+
+        <div class="grid"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+          <div class="form-group position-relative">
+            <label class="form-label">From</label>
+            <select id="origin" class="form-control" required></select>
+          </div>
+
+          <div class="flex justify-center items-center" style="margin-top: 1.5rem;">
+            <button type="button" id="swap-cities" class="btn btn-outline"
+              style="border-radius: 50%; width: 40px; height: 40px; padding: 0; border: none; background: rgba(255,255,255,0.05);">
+              <i class="fas fa-exchange-alt" style="color: var(--text-muted); transition: transform 0.3s;"></i>
+            </button>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">To</label>
+            <select id="destination" class="form-control" required></select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Depart</label>
+            <input type="date" id="departDate" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Return</label>
+            <input type="date" id="returnDate" class="form-control">
+          </div>
+        </div>
+
+        <div class="grid mt-4"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+          <div class="form-group">
+            <label class="form-label">Passengers</label>
+            <input type="number" id="passengers" class="form-control" min="1" max="9" value="1" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Class</label>
+            <select id="cabinClass" class="form-control">
+              <option value="Economy">Economy</option>
+              <option value="Business">Business</option>
+              <option value="First">First Class</option>
+            </select>
+          </div>
+
+          <div class="flex items-center mt-2">
+            <button type="submit" class="btn btn-primary btn-block" style="height: 100%;">
+              Search Flights
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </header>
+
+  <!-- Popular Destinations -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Popular Destinations</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Explore our most booked cities and find your
+        next adventure.</p>
+
+      <div class="swiper swiper-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=500&q=80"
+                alt="Dubai" class="dest-img">
+              <div class="dest-overlay">
+                <div class="flex justify-between items-center">
+                  <h3 style="margin:0;">Dubai</h3>
+                  <span class="badge badge-neutral">From $350</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=500&q=80"
+                alt="London" class="dest-img">
+              <div class="dest-overlay">
+                <div class="flex justify-between items-center">
+                  <h3 style="margin:0;">London</h3>
+                  <span class="badge badge-neutral">From $450</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <img src="assets/images/paris.png" alt="Paris" class="dest-img">
+              <div class="dest-overlay">
+                <div class="flex justify-between items-center">
+                  <h3 style="margin:0;">Paris</h3>
+                  <span class="badge badge-neutral">From $420</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="dest-card">
+              <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=500&q=80"
+                alt="Tokyo" class="dest-img">
+              <div class="dest-overlay">
+                <div class="flex justify-between items-center">
+                  <h3 style="margin:0;">Tokyo</h3>
+                  <span class="badge badge-neutral">From $750</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section bg-soft">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Seamless Travel</h2>
+      <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Booking your perfect flight in 3 simple steps.
+      </p>
+
+      <div class="grid"
+        style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 4rem; text-align: center;">
+        <div data-aos="fade-up" data-aos-delay="200">
+          <div class="step-icon"><i class="fas fa-search"></i></div>
+          <h3 class="mb-2">1. Search</h3>
+          <p class="text-muted">Find the best flights tailored to your schedule and budget.</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="300">
+          <div class="step-icon"><i class="fas fa-ticket-alt"></i></div>
+          <h3 class="mb-2">2. Book</h3>
+          <p class="text-muted">Select your seats, add extras, and complete your booking safely.</p>
+        </div>
+        <div data-aos="fade-up" data-aos-delay="400">
+          <div class="step-icon"><i class="fas fa-plane-departure"></i></div>
+          <h3 class="mb-2">3. Fly</h3>
+          <p class="text-muted">Check-in online effortlessly and enjoy your seamless journey.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="logo mb-4"><i class="fas fa-plane-departure"></i> SkyWay</h3>
+          <p class="text-muted">Elevate your journey with uncompromising comfort, reliability, and modern style.</p>
+        </div>
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="bookings.html">My Bookings</a></li>
+            <li><a href="checkin.html">Check-In</a></li>
+            <li><a href="status.html">Flight Status</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Destinations</h4>
+          <ul class="footer-links">
+            <li><a href="#">Dubai</a></li>
+            <li><a href="#">London</a></li>
+            <li><a href="#">Paris</a></li>
+            <li><a href="#">Tokyo</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-title">Newsletter</h4>
+          <p class="text-muted mb-4">Subscribe for the latest updates.</p>
+          <div class="flex gap-2">
+            <input type="email" class="form-control" placeholder="Email Address">
+            <button class="btn btn-primary" onclick="showToast('Subscribed!', 'success')"><i
+                class="fas fa-arrow-right"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 SkyWay Airlines. All rights reserved. <a href="admin.html"
+            style="color:var(--text-muted); text-decoration:none; margin-left:10px;">Admin Portal</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/search.js"></script>
+  <script>
+    AOS.init({ duration: 800, once: true });
+
+    new Swiper('.swiper-container', {
+      slidesPerView: 1,
+      spaceBetween: 24,
+      breakpoints: {
+        640: { slidesPrView: 2 },
+        1024: { slidesPerView: 3 }
+      },
+      pagination: { el: '.swiper-pagination', clickable: true },
+    });
+  </script>
+</body>
+
+</html>
